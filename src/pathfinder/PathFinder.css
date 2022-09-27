@@ -1,0 +1,22 @@
+.grid {
+    /* width: 1125px; */
+    display: grid;
+    grid-template-columns: repeat(45, 1fr);
+    margin: auto;
+}
+
+.pathFindWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.temp {
+    width: 20%;
+    padding: 1rem;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.buttons {
+    display: flex;
+}
