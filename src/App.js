@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import PathFinder from './pathfinder/PathFinder';
 import './App.css';

@@ -32,12 +32,24 @@
     animation-play-state: running;
 }
 
+.current {
+    animation-name: current;
+    animation-duration: 1.5s;
+}
+
 .wall {
     background-color: #02030a;
 }
 
+@keyframes current {}
+
 @keyframes visitNode {
     0% {
+        background-color: red;
+        border: 2px solid black;
+    }
+
+    10% {
         transform: scale(0.2);
         background-color: rgba(10, 10, 39, 0.75);
         border-radius: 100%;

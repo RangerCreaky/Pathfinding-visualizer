@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Node from './node/Node';
-import { BFS, getPath } from '../algorithms/BFS';
-import { djikstra } from '../algorithms/djikstra';
+import { BFS, getPathBFS } from '../algorithms/BFS';
+import { djikstra, getPathDjikstra } from '../algorithms/djikstra';
+import { BiBFS, getPathBiBFS } from '../algorithms/BiBFS';
 
 import './PathFinder.css';
 
@@ -16,9 +17,11 @@ const COLS = 45;
 
 const PathFinder = () => {
     const [grid, setGrid] = useState([]);
-    const [startNode, setStartNode] = useState({});
-    const [endNode, setEndNode] = useState({});
+    const [startNode, setStartNode] = useState(null);
+    const [endNode, setEndNode] = useState();
     const [wallCreationStarted, setWallCreation] = useState(false);
+    const [clearBoard, setClearboard] = useState(true);
+
 
     const bounds = {
         rowSize: ROWS,
@@ -37,7 +40,9 @@ const PathFinder = () => {
                     isVisited: false,
                     previous: null,
                     wall: false,
-                    distance: Infinity
+                    distance: Infinity,
+                    front: null,
+                    back: null
                 }
                 if (currNode.isStart) {
                     setStartNode(currNode);
@@ -115,7 +120,74 @@ const PathFinder = () => {
 
                     const id = `${row}-${col}`;
                     const node = document.getElementById(id);
-                    node.classList.remove('white');
+                    node.classList.add('visited');
+                }, 100 * i);
+
+            }
+        }
+    }
+
+    const animateDjikstra = (visitedArr, path) => {
+
+        for (let i = 0; i < visitedArr.length; i++) {
+            if (i === visitedArr.length - 1) {
+                setTimeout(() => {
+                    animateShortestPath(path);
+                }, 15 * i);
+            }
+
+            setTimeout(() => {
+                const row = visitedArr[i].row;
+                const col = visitedArr[i].col;
+
+                const id = `${row}-${col}`;
+
+                const node = document.getElementById(id);
+                node.classList.add('visited');
+            }, 15 * i);
+
+        }
+    }
+
+    const animateBiBFS = (result) => {
+        let visStart = result.visStart;
+        let visEnd = result.visEnd;
+
+        // let n = Math.max(visStart.length, visEnd.length);
+        for (let i = 0; i < visStart.length; i++) {
+            for (let j = 0; j < visStart[i].length; j++) {
+                if ((i === visStart.length - 1) && (j === visStart[i].length - 1)) {
+                    setTimeout(() => {
+                        animateShortestPath(result.path);
+                    }, 100 * i);
+                }
+
+                setTimeout(() => {
+                    const row = visStart[i][j].row;
+                    const col = visStart[i][j].col;
+
+                    const id = `${row}-${col}`;
+                    const node = document.getElementById(id);
+                    node.classList.add('visited');
+                }, 100 * i);
+
+            }
+        }
+
+        for (let i = 0; i < visEnd.length; i++) {
+            for (let j = 0; j < visEnd[i].length; j++) {
+                if ((i === visStart.length - 1) && (j === visStart[i].length - 1)) {
+                    setTimeout(() => {
+                        animateShortestPath(result.path);
+                    }, 100 * i);
+                }
+
+                setTimeout(() => {
+                    const row = visEnd[i][j].row;
+                    const col = visEnd[i][j].col;
+
+                    const id = `${row}-${col}`;
+                    const node = document.getElementById(id);
                     node.classList.add('visited');
                 }, 100 * i);
 
@@ -132,22 +204,55 @@ const PathFinder = () => {
 
                 const id = `${row}-${col}`;
                 const node = document.getElementById(id);
-                node.classList.remove('white');
                 node.classList.add('path');
-                console.log(node.classList);
             }, 50 * i);
         }
     }
 
+
+
     const handleOnClickBFS = () => {
-        const visitedArr = BFS(grid, startNode, endNode, bounds);
-        const path = getPath(endNode);
-        animateBFS(visitedArr, path);
+        if (clearBoard) {
+            const visitedArr = BFS(grid, startNode, endNode, bounds);
+            const path = getPathBFS(endNode);
+            animateBFS(visitedArr, path);
+            setClearboard(false);
+        }
+        else {
+            alert("Please clear the board first");
+        }
     }
 
     const handleOnClickDijkstra = () => {
-        const visitedArr = djikstra(grid, startNode, endNode, bounds);
-        console.log(visitedArr);
+        if (clearBoard) {
+            const visitedArr = djikstra(grid, startNode, endNode, bounds);
+            const path = getPathDjikstra(endNode);
+            console.log(visitedArr);
+            console.log(path);
+            animateDjikstra(visitedArr, path);
+            setClearboard(false);
+
+        }
+        else {
+            alert("please clear the board first");
+        }
+
+    }
+
+    const handleOnClickBiBFS = () => {
+        if (clearBoard) {
+            const result = BiBFS(grid, startNode, endNode, bounds);
+            console.log(result);
+            if (result.point) {
+                result.path = getPathBiBFS(result.point);
+            }
+            animateBiBFS(result);
+            setClearboard(false);
+        }
+        else {
+            alert("please clear the board first");
+        }
+
     }
 
     return (
@@ -155,6 +260,7 @@ const PathFinder = () => {
             <div className='buttons'>
                 <button className="temp" onClick={handleOnClickBFS}> Visualize BFS </button>
                 <button className="temp" onClick={handleOnClickDijkstra}> Visualize Djikstra </button>
+                <button className="temp" onClick={handleOnClickBiBFS}> Visualize Bi-directional BFS </button>
             </div>
             <div className='grid'>
                 {renderNodes()}
