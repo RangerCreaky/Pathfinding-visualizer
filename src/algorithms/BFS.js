@@ -73,7 +73,7 @@ export const BFS = (grid, startNode, endNode, bounds) => {
     // console.log("broken")
 }
 
-export const getPath = (endNode) => {
+export const getPathBFS = (endNode) => {
     let path = [];
     let node = endNode;
     while (node !== null) {

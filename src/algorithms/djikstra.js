@@ -14,7 +14,6 @@ export const djikstra = (grid, startNode, endNode, bounds) => {
     let pq = new PriorityQueue();
     let visited = new Map();
 
-
     pq.insert(startNode);
     visited.set({ row: startNode.row, col: startNode.col }, 1);
 
@@ -22,25 +21,22 @@ export const djikstra = (grid, startNode, endNode, bounds) => {
     let visitedNodesInOrder = [];
     while (!pq.isEmpty()) {
         let curr = pq.extractMin();
-        console.log('hello world');
 
         visitedNodesInOrder.push(curr);
 
         if (curr === endNode) {
+            console.log("end node found");
             return visitedNodesInOrder;
         }
 
         let distance = curr.distance;
-        console.log('distance', distance);
         for (let i = 0; i < 4; i++) {
             let nextRow = curr.row + x[i];
             let nextCol = curr.col + y[i];
 
-            if (!(nextRow < 0) && !(nextRow < 0) && !(nextCol >= rowSize) && !(nextRow >= colSize)) {
+            if (!(nextRow < 0) && !(nextCol < 0) && !(nextRow >= rowSize) && !(nextCol >= colSize)) {
                 let ele = grid[nextRow][nextCol];
-
                 if (ele.wall) continue;
-
                 if (!visited.has({ row: ele.row, col: ele.col })) {
                     ele.distance = distance + 1;
                     pq.insert(ele);
@@ -60,4 +56,15 @@ export const djikstra = (grid, startNode, endNode, bounds) => {
     }
     alert("No Possible path");
     return visitedNodesInOrder;
+}
+
+export const getPathDjikstra = (endNode) => {
+    let path = [];
+    let currNode = endNode;
+    while (currNode !== null) {
+        path.push(currNode);
+        currNode = currNode.previous;
+    }
+
+    return path;
 }
