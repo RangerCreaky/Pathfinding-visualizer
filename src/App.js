@@ -28,7 +28,7 @@ const App = () => {
             <h4 className='heading'> Visualize the algorithms </h4>
             <div className='util'>
                 <div> <input className='color' type="color" value={'#02030a'} disabled /> Wall</div>
-                <div> <button onClick={clickhandler} className="utilButton"> clearBoard </button> </div>
+                <div> <button onClick={clickhandler} className="utilButton"> clear Board </button> </div>
             </div>
             <div className='main'>
                 <PathFinder />
