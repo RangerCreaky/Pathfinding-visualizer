@@ -1,0 +1,28 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.heading {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.color {
+    width: 25px;
+}
+
+.util {
+    display: flex;
+}
+
+.util>div {
+    margin: 20px;
+}
