@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Navbar from './navbar/NavBar';
 import PathFinder from './pathfinder/PathFinder';
 import './App.css';
 /*
@@ -25,10 +25,11 @@ const App = () => {
 
     return (
         <div className='bodyWrapper'>
-            <h4 className='heading'> Visualize the algorithms </h4>
+            <Navbar/>
+            {/* <h4 className='heading'> Visualize the algorithms </h4> */}
             <div className='util'>
                 <div> <input className='color' type="color" value={'#02030a'} disabled /> Wall</div>
-                <div> <button onClick={clickhandler} className="utilButton"> clear Board </button> </div>
+                {/* <div> <button onClick={clickhandler} className="utilButton"> clear Board </button> </div> */}
             </div>
             <div className='main'>
                 <PathFinder />

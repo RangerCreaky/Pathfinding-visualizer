@@ -3,6 +3,7 @@ import Node from './node/Node';
 import { BFS, getPathBFS } from '../algorithms/BFS';
 import { djikstra, getPathDjikstra } from '../algorithms/djikstra';
 import { BiBFS, getPathBiBFS } from '../algorithms/BiBFS';
+import Button from 'react-bootstrap/Button';
 
 import './PathFinder.css';
 
@@ -258,9 +259,9 @@ const PathFinder = () => {
     return (
         <div className='pathFindWrapper'>
             <div className='buttons'>
-                <button className="temp" onClick={handleOnClickBFS}> Visualize BFS </button>
-                <button className="temp" onClick={handleOnClickDijkstra}> Visualize Djikstra </button>
-                <button className="temp" onClick={handleOnClickBiBFS}> Visualize Bi-directional BFS </button>
+                <Button variant="success" className='desc_button' onClick={handleOnClickBFS} > Visualize BFS </Button>
+                <Button variant="success" className='desc_button'onClick={handleOnClickDijkstra}> Visualize Djikstra </Button>
+                <Button variant="success" className='desc_button'onClick={handleOnClickBiBFS}> Visualize Bi-directional BFS </Button>
             </div>
             <div className='grid'>
                 {renderNodes()}
