@@ -10,13 +10,18 @@
     flex-direction: column;
 }
 
-.temp {
-    width: 20%;
+.desc_button{
+    width: 18%;
     padding: 1rem;
     margin-bottom: 20px;
     margin-left: 10px;
+    
+    border: none;
+
 }
 
 .buttons {
     display: flex;
+    justify-content: center;
+
 }
